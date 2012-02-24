@@ -34,6 +34,13 @@ window.App =
 # ----------
 class window.Tag extends Backbone.Model
 
+    defaults:
+        "css-class": "label-info"
+
+    # Toggle our CSS Class attribute.
+    toggleCSSClass: =>
+        @set("css-class": if @get("css-class") is "label-info" then "label-warning" else "label-info" )
+
 
 # Tags Collection
 # ---------------
@@ -48,12 +55,21 @@ class window.Tags extends Backbone.Collection
 # ----------
 class App.Views.TagView extends Backbone.View
 
-    # Set the model internally.
-    initialize: (opts) -> @tag = opts.model
+    events:
+        "click": "toggleCSSClass"
+
+    initialize: (opts) ->
+        # Set the model internally.
+        @tag = opts.model
+        # Re-render if our Model changes.
+        @tag.bind("change", @render, @)
+
+    # Toggle on the Model
+    toggleCSSClass: => @tag.toggleCSSClass()
 
     render: ->
-        $(@el).append($('<span/>',
-            'class': 'label label-info'
+        $(@el).html($('<span/>',
+            'class': "label #{@tag.get('css-class')}"
             'text':  @tag.get("name")
             'style': 'margin-right:5px;cursor:pointer'
         )).attr("style": "display:inline-block")
@@ -134,7 +150,8 @@ class App.Views.TagsCategoriesTagsView extends Backbone.View
 
     render: ->
         for tag in @tags
-            $(@el).append(new App.Views.TagView(model: tag).render().el)
+            # Just remember to return the actual Tag Object when passing it to a View.
+            $(@el).append(new App.Views.TagView(model: tag.getObject()).render().el)
         @
 
 
