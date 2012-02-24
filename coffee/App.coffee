@@ -17,7 +17,7 @@ window.App =
             {"name": "python", "category": "languages"}
         ]
         App.Models.Tags = new Tags(tags)
-        new App.Views.TagsView(model: App.Models.Tags)
+        new App.Views.TagsView(model: App.Models.Tags).render()
 
         # TagsCategories.
         categories = [
@@ -41,6 +41,8 @@ class window.Tags extends Backbone.Collection
     
     model: Tag
 
+    comparator: (tag) -> tag.get("name")
+
 
 # Tags View
 # ----------
@@ -48,12 +50,10 @@ class App.Views.TagsView extends Backbone.View
 
     el: "table#tags"
 
-    initialize: (opts) ->
-        @models = opts.model.models
-        @render()
+    initialize: (opts) -> @tags = opts.model.models
 
     render: ->
-        for tag in @models
+        for tag in @tags
             $(@el).append(
                 $('<tr/>')
                 .append($('<td/>', { 'text': tag.cid }))
@@ -82,6 +82,9 @@ class window.PointerCollection extends Backbone.Collection
     initialize: (opts) ->
         # Save the actual reference.
         @ref = opts.ref
+        # Use parent's comparator?
+        if (@ref.comparator) then this.comparator = @ref.comparator
+        
         # Reset whatever was saved.
         @reset()
 
@@ -111,14 +114,11 @@ class window.TagsCategories extends Backbone.Collection
 # ----------
 class App.Views.TagsCategoriesTagsView extends Backbone.View
 
-    tagName: "ul"
-
-    initialize: (opts) ->
-        @tags = opts.model.models
+    initialize: (opts) -> @tags = opts.model.models
 
     render: ->
         for tag in @tags
-            $(@el).append($('<li/>', { 'text': tag.get("name") }))
+            $(@el).append($('<span/>', { 'class': 'label label-warning', 'text': tag.get("name"), 'style': 'margin-right:5px' }))
         @
 
 
