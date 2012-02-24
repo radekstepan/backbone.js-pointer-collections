@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Is Object in a Bag?</title>
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- jQuery and underscore.js dependencies -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://raw.github.com/documentcloud/underscore/master/underscore-min.js"></script>
+
+    <!-- imjs library -->
+    <script type="text/javascript" src="../src/model.js"></script>
+    <script type="text/javascript" src="../src/lists.js"></script>
+    <script type="text/javascript" src="../src/service.js"></script>
+    <script type="text/javascript" src="../src/query.js"></script>
+
+    <script src="js/object-in-bag.js"></script>
+  </head>
+
+  <body>
+    <!-- menu -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width: auto;">
+          <a class="brand" href="#">InterMine JavaScript API Examples</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Is Object in a Bag?</a></li>
+            </ul>
+            <ul class="nav pull-right">
+              <li class="divider-vertical"></li>
+              <li><a href="#">Fork me on GitHub</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- content -->
+    <div class="container">
+        <div class="row">
+          <h1>Is Object in a Bag?</h1>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+          <div class="span8">
+            <h2>Example objects <small>on FlyMine server</small></h2>
+            <p>First 10 genes on FlyMine preview that contain <em>ze</em> in their symbol:</p>
+            <table id="ze-genes" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Symbol</th>
+                  <th>Ensembl ID</th>
+                  <th>InterMine ID</th>
+                  <th>In Bag?</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  </body>
+</html>
