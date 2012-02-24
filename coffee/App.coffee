@@ -44,6 +44,22 @@ class window.Tags extends Backbone.Collection
     comparator: (tag) -> tag.get("name")
 
 
+# Tag View
+# ----------
+class App.Views.TagView extends Backbone.View
+
+    # Set the model internally.
+    initialize: (opts) -> @tag = opts.model
+
+    render: ->
+        $(@el).append($('<span/>',
+            'class': 'label label-info'
+            'text':  @tag.get("name")
+            'style': 'margin-right:5px;cursor:pointer'
+        )).attr("style": "display:inline-block")
+        @
+
+
 # Tags View
 # ----------
 class App.Views.TagsView extends Backbone.View
@@ -57,7 +73,7 @@ class App.Views.TagsView extends Backbone.View
             $(@el).append(
                 $('<tr/>')
                 .append($('<td/>', { 'text': tag.cid }))
-                .append($('<td/>', { 'text': tag.get("name") }))
+                .append($('<td/>', { 'html': new App.Views.TagView(model: tag).render().el }))
                 .append($('<td/>', { 'text': tag.get("category") }))
             )
 
@@ -83,7 +99,7 @@ class window.PointerCollection extends Backbone.Collection
         # Save the actual reference.
         @ref = opts.ref
         # Use parent's comparator?
-        if (@ref.comparator) then this.comparator = @ref.comparator
+        if (@ref.comparator) then @comparator = @ref.comparator
         
         # Reset whatever was saved.
         @reset()
@@ -118,7 +134,7 @@ class App.Views.TagsCategoriesTagsView extends Backbone.View
 
     render: ->
         for tag in @tags
-            $(@el).append($('<span/>', { 'class': 'label label-warning', 'text': tag.get("name"), 'style': 'margin-right:5px' }))
+            $(@el).append(new App.Views.TagView(model: tag).render().el)
         @
 
 
