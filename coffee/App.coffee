@@ -99,7 +99,7 @@ class App.Views.TagsView extends Backbone.View
 class window.PointerModel extends Backbone.Model
 
     # Override get to fetch the actual object and its attribute.
-    get: (attribute) => @getObject().get(attribute)
+    get: (attribute) => @getObject()?.get(attribute)
 
     # Fetch the actual object.
     getObject: => @collection.ref.getByCid(@attributes["cid"])
